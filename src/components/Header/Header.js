@@ -1,0 +1,80 @@
+import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  Button,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material';
+import {
+  Home as HomeIcon,
+  Restaurant as RestaurantIcon,
+  Kitchen as KitchenIcon,
+  CalendarToday as CalendarIcon,
+  ShoppingCart as ShoppingCartIcon,
+  AccountBalance as AccountBalanceIcon,
+} from '@mui/icons-material';
+
+const navItems = [
+  { label: 'Home', path: '/', icon: HomeIcon },
+  { label: 'Recipes', path: '/recipes', icon: RestaurantIcon },
+  { label: 'Fridge', path: '/fridge', icon: KitchenIcon },
+  { label: 'Weekly Menu', path: '/weekly-menu', icon: CalendarIcon },
+  { label: 'Grocery List', path: '/grocery-list', icon: ShoppingCartIcon },
+  { label: 'Budget Planner', path: '/budget-planner', icon: AccountBalanceIcon },
+];
+
+const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  return (
+    <AppBar position="static" sx={{ backgroundColor: '#fff', color: '#333', boxShadow: 1 }}>
+      <Toolbar>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{
+            flexGrow: 0,
+            fontWeight: 'bold',
+            color: '#1976d2',
+            mr: 4,
+          }}
+        >
+          Weekly Recipes
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 1, flexGrow: 1 }}>
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+            return (
+              <Button
+                key={item.path}
+                startIcon={<Icon />}
+                onClick={() => navigate(item.path)}
+                sx={{
+                  color: isActive ? '#1976d2' : '#666',
+                  fontWeight: isActive ? 'bold' : 'normal',
+                  borderBottom: isActive ? '2px solid #1976d2' : 'none',
+                  borderRadius: 0,
+                  '&:hover': {
+                    backgroundColor: 'rgba(25, 118, 210, 0.08)',
+                  },
+                }}
+              >
+                {!isMobile && item.label}
+              </Button>
+            );
+          })}
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default Header;
