@@ -1,12 +1,18 @@
 import React from 'react';
-import { Container, Typography, Grid, Card, CardContent, CardMedia } from '@mui/material';
+import { Container, Typography, Grid, Card, CardContent, CardMedia, IconButton, Box } from '@mui/material';
 import * as styles from './Recipes.styles';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import AddIcon from '@mui/icons-material/Add';
+import CheckIcon from '@mui/icons-material/Check';
 
 interface Recipe {
   id: number;
   title: string;
   description: string;
   image: string;
+  isFavorite: boolean;
+  isAdded: boolean;
 }
 
 const recipes: Recipe[] = [
@@ -16,36 +22,48 @@ const recipes: Recipe[] = [
     title: 'Avocado Toast',
     description: 'Toasted sourdough topped with smashed avocado and chili flakes.',
     image: 'https://gimmedelicious.com/wp-content/uploads/2016/07/avocado-toast-7-of-13.jpg',
+    isFavorite: false,
+    isAdded: false
   },
   {
     id: 2,
     title: 'Beef Tacos',
     description: 'Soft tortillas filled with seasoned beef and fresh toppings.',
-    image: 'https://tse3.mm.bing.net/th/id/OIP.XshzlcsE2bGWql2QELtpMwHaLH?rs=1&pid=ImgDetMain&o=7&rm=3',
+    image: 'https://tse3.mm.bing.net/th/id/OIP.XshzlcsE2bGWql2QELtpMwHaLH?rs=1&pid=ImgDetMain&o=7&rm=3',  
+    isFavorite: false,
+    isAdded: false
   },
   {
     id: 3,
     title: 'Grilled Salmon',
     description: 'Salmon fillet grilled with lemon and herbs.',
-    image: 'https://www.cookingclassy.com/wp-content/uploads/2018/05/grilled-lemon-herb-salmon-7.jpg',
+    image: 'https://www.cookingclassy.com/wp-content/uploads/2018/05/grilled-lemon-herb-salmon-7.jpg',  
+    isFavorite: false,
+    isAdded: false,
   },
   {
     id: 4,
     title: 'Massaman Curry',
     description: 'Chicken marinated and cooked in a rich and aromatic curry sauce.',
-    image: 'https://tse3.mm.bing.net/th/id/OIP.7re2SAK6PB769LpYC1L9mQHaJ4?rs=1&pid=ImgDetMain&o=7&rm=3',
+    image: 'https://tse3.mm.bing.net/th/id/OIP.7re2SAK6PB769LpYC1L9mQHaJ4?rs=1&pid=ImgDetMain&o=7&rm=3',  
+    isFavorite: false,
+    isAdded: false
   },
   {
     id: 5,
     title: 'Chicken Pot Pie',
     description: 'Creamy Chicken wrapped in flaky pastry.',
-    image: 'https://tse3.mm.bing.net/th/id/OIP.BJT8aOJ3qn3PZUQwRuRuDAHaLH?rs=1&pid=ImgDetMain&o=7&rm=3',
+    image: 'https://tse3.mm.bing.net/th/id/OIP.BJT8aOJ3qn3PZUQwRuRuDAHaLH?rs=1&pid=ImgDetMain&o=7&rm=3',  
+    isFavorite: false,
+    isAdded: false
   },
   {
     id: 6,
     title: 'Nasi Lemak',
     description: 'Fragrant coconut rice served with a side of spicy sambal and a fried egg.',
-    image: 'https://farahjeats.com/wp-content/uploads/2023/03/IMG_6683_jpg-1.jpg',
+    image: 'https://farahjeats.com/wp-content/uploads/2023/03/IMG_6683_jpg-1.jpg',  
+    isFavorite: false,
+    isAdded: false
   },
 ];
 
@@ -67,6 +85,14 @@ const Recipes: React.FC = () => {
                 <Typography sx={styles.cardDescription}>
                   {recipe.description}
                 </Typography>
+                <Box sx={styles.box}>
+                  <IconButton sx={styles.buttons}>
+                    {recipe.isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                  </IconButton>
+                  <IconButton sx={styles.buttons}> 
+                    {recipe.isAdded ? <AddIcon /> : <CheckIcon />}
+                  </IconButton>
+                </Box>
               </CardContent>
               <CardMedia
                 component="img"
