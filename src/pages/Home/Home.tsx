@@ -9,18 +9,19 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import SummaryCard from '../../components/SummaryCard/SummaryCard';
 import QuickAccessButton from '../../components/QuickAccessButton/QuickAccessButton';
+import * as styles from './Home.styles';
 
-const Home = () => {
+const Home: React.FC = () => {
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography variant="h3" component="h1" sx={{ fontWeight: 'bold', mb: 2 }}>
+    <Container maxWidth="lg" sx={styles.container}>
+      <Typography variant="h3" component="h1" sx={styles.title}>
         Welcome to Weekly Recipes
       </Typography>
-      <Typography variant="body1" sx={{ mb: 4, color: 'text.secondary' }}>
+      <Typography variant="body1" sx={styles.subtitle}>
         Plan your meals, track your budget, and organize your grocery shopping all in one place.
       </Typography>
 
-      <Grid container spacing={3} sx={{ mb: 5 }}>
+      <Grid container spacing={3} sx={styles.summaryGrid}>
         <Grid item xs={12} sm={6} md={3}>
           <SummaryCard
             icon={RestaurantIcon}
@@ -55,7 +56,7 @@ const Home = () => {
         </Grid>
       </Grid>
 
-      <Typography variant="h4" component="h2" sx={{ fontWeight: 'bold', mb: 3 }}>
+      <Typography variant="h4" component="h2" sx={styles.quickAccessTitle}>
         Quick Access
       </Typography>
 
@@ -105,11 +106,7 @@ const Home = () => {
       <Fab
         color="primary"
         aria-label="help"
-        sx={{
-          position: 'fixed',
-          bottom: 16,
-          right: 16,
-        }}
+        sx={styles.helpFab}
       >
         <HelpIcon />
       </Fab>

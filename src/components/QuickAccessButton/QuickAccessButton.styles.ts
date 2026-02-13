@@ -1,7 +1,10 @@
-export const card = {
+import { SxProps, Theme } from '@mui/material';
+
+export const card: SxProps<Theme> = {
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
+  cursor: 'pointer',
   boxShadow: 2,
   borderRadius: 2,
   transition: 'transform 0.2s, box-shadow 0.2s',
@@ -11,7 +14,7 @@ export const card = {
   },
 };
 
-export const content = {
+export const content: SxProps<Theme> = {
   flexGrow: 1,
   display: 'flex',
   flexDirection: 'column',
@@ -20,19 +23,14 @@ export const content = {
   p: 3,
 };
 
-export const iconWrap = {
+export const iconWrap: SxProps<Theme> = {
   mb: 2,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
 };
 
-export const value = {
-  fontWeight: 'bold',
-  mb: 1,
-};
-
-export const label = {
+export const label: SxProps<Theme> = {
+  fontWeight: 'medium',
   textAlign: 'center',
 };
-

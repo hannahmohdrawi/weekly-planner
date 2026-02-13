@@ -2,8 +2,15 @@ import React from 'react';
 import { Container, Typography, Grid, Card, CardContent, CardMedia } from '@mui/material';
 import * as styles from './Recipes.styles';
 
-const recipes = [
-  // TODO: Make this into a database
+interface Recipe {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+}
+
+const recipes: Recipe[] = [
+  // TODO: Map this into a database
   {
     id: 1,
     title: 'Avocado Toast',
@@ -40,38 +47,38 @@ const recipes = [
     description: 'Fragrant coconut rice served with a side of spicy sambal and a fried egg.',
     image: 'https://farahjeats.com/wp-content/uploads/2023/03/IMG_6683_jpg-1.jpg',
   },
-]
+];
 
-const Recipes = () => {
+const Recipes: React.FC = () => {
   return (
     <Container maxWidth="lg" sx={styles.container}>
-    <Typography variant="h4" component="h1" sx={styles.title}>
-      Recipes
-    </Typography>
+      <Typography variant="h4" component="h1" sx={styles.title}>
+        Recipes
+      </Typography>
 
-    <Grid container spacing={3} sx={styles.grid}>
-      {recipes.map((recipe) => (
-        <Grid item xs={12} sm={6} md={4} key={recipe.id}>
-          <Card sx={styles.card}>
-            <CardContent sx={styles.cardContent}>
-              <Typography variant="h6" sx={styles.cardTitle}>
-                {recipe.title}
-              </Typography>
-              <Typography sx={styles.cardDescription}>
-                {recipe.description}
-              </Typography>
-            </CardContent>
-            <CardMedia
-              component="img"
-              image={recipe.image}
-              alt={recipe.title}
-              sx={styles.cardMedia}
-            />
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
-  </Container>
+      <Grid container spacing={3} sx={styles.grid}>
+        {recipes.map((recipe) => (
+          <Grid item xs={12} sm={6} md={4} key={recipe.id}>
+            <Card sx={styles.card}>
+              <CardContent sx={styles.cardContent}>
+                <Typography variant="h6" sx={styles.cardTitle}>
+                  {recipe.title}
+                </Typography>
+                <Typography sx={styles.cardDescription}>
+                  {recipe.description}
+                </Typography>
+              </CardContent>
+              <CardMedia
+                component="img"
+                image={recipe.image}
+                alt={recipe.title}
+                sx={styles.cardMedia}
+              />
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 };
 

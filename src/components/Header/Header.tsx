@@ -17,8 +17,15 @@ import {
   ShoppingCart as ShoppingCartIcon,
   AccountBalance as AccountBalanceIcon,
 } from '@mui/icons-material';
+import * as styles from './Header.styles';
 
-const navItems = [
+interface NavItem {
+  label: string;
+  path: string;
+  icon: React.ElementType;
+}
+
+const navItems: NavItem[] = [
   { label: 'Home', path: '/', icon: HomeIcon },
   { label: 'Recipes', path: '/recipes', icon: RestaurantIcon },
   { label: 'Fridge', path: '/fridge', icon: KitchenIcon },
@@ -27,28 +34,23 @@ const navItems = [
   { label: 'Budget Planner', path: '/budget-planner', icon: AccountBalanceIcon },
 ];
 
-const Header = () => {
+const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#fff', color: '#333', boxShadow: 1 }}>
+    <AppBar position="static" sx={styles.appBar}>
       <Toolbar>
         <Typography
           variant="h6"
           component="div"
-          sx={{
-            flexGrow: 0,
-            fontWeight: 'bold',
-            color: '#1976d2',
-            mr: 4,
-          }}
+          sx={styles.brand}
         >
           Weekly Recipes
         </Typography>
-        <Box sx={{ display: 'flex', gap: 1, flexGrow: 1 }}>
+        <Box sx={styles.navContainer}>
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
@@ -57,15 +59,7 @@ const Header = () => {
                 key={item.path}
                 startIcon={<Icon />}
                 onClick={() => navigate(item.path)}
-                sx={{
-                  color: isActive ? '#1976d2' : '#666',
-                  fontWeight: isActive ? 'bold' : 'normal',
-                  borderBottom: isActive ? '2px solid #1976d2' : 'none',
-                  borderRadius: 0,
-                  '&:hover': {
-                    backgroundColor: 'rgba(25, 118, 210, 0.08)',
-                  },
-                }}
+                sx={styles.navButton(isActive)}
               >
                 {!isMobile && item.label}
               </Button>
