@@ -1,10 +1,10 @@
-import React from 'react';
 import { Container, Typography, Grid, Card, CardContent, CardMedia, IconButton, Box } from '@mui/material';
 import * as styles from './Recipes.styles';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
+import React, { useState } from 'react';
 
 interface Recipe {
   id: number;
@@ -15,7 +15,7 @@ interface Recipe {
   isAdded: boolean;
 }
 
-const recipes: Recipe[] = [
+const initialRecipes: Recipe[] = [
   // TODO: Map this into a database
   {
     id: 1,
@@ -68,12 +68,71 @@ const recipes: Recipe[] = [
 ];
 
 const Recipes: React.FC = () => {
+  const [recipes, setRecipes] = useState<Recipe[]>(initialRecipes);
+
+  const toggleFavorite = (id: number) => {
+    setRecipes(recipes.map(recipe => 
+      recipe.id === id ? { ...recipe, isFavorite: !recipe.isFavorite } : recipe
+    ));
+  };
+
+  const toggleAdded = (id: number) => {
+    setRecipes(recipes.map(recipe => 
+      recipe.id === id ? { ...recipe, isAdded: !recipe.isAdded } : recipe
+    ));
+  }
+
   return (
     <Container maxWidth="lg" sx={styles.container}>
       <Typography variant="h4" component="h1" sx={styles.title}>
         Recipes
       </Typography>
 
+      {/* Favorites Section */}
+      {recipes.some(recipe => recipe.isFavorite) && (
+        <>
+          <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2, mt: 2 }}>
+            Favorites
+          </Typography>
+          <Grid container spacing={2} sx={{ mb: 4 }}>
+            {recipes
+              .filter(recipe => recipe.isFavorite)
+              .map((recipe) => (
+                <Grid item xs={6} sm={4} md={3} key={`fav-${recipe.id}`}>
+                  <Card sx={{ ...styles.card, height: 200 }}>
+                    <CardContent sx={{ ...styles.cardContent, p: 1.5, pb: 5 }}>
+                      <Typography variant="subtitle2" sx={{ ...styles.cardTitle, fontSize: 16 }}>
+                        {recipe.title}
+                      </Typography>
+                      <Typography sx={{ ...styles.cardDescription, fontSize: 12 }}>
+                        {recipe.description}
+                      </Typography>
+                      <Box sx={{ ...styles.box, bottom: 4, left: 4 }}>
+                        <IconButton sx={styles.buttons} size="small">
+                          <FavoriteIcon fontSize="small" />
+                        </IconButton>
+                        <IconButton sx={styles.buttons} size="small">
+                          {recipe.isAdded ? <CheckIcon fontSize="small" /> : <AddIcon fontSize="small" />}
+                        </IconButton>
+                      </Box>
+                    </CardContent>
+                    <CardMedia
+                      component="img"
+                      image={recipe.image}
+                      alt={recipe.title}
+                      sx={{ ...styles.cardMedia, width: 100 }}
+                    />
+                  </Card>
+                </Grid>
+              ))}
+          </Grid>
+        </>
+      )}
+
+      {/* All Recipes Section */}
+      <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
+        All Recipes
+      </Typography>
       <Grid container spacing={3} sx={styles.grid}>
         {recipes.map((recipe) => (
           <Grid item xs={12} sm={6} md={4} key={recipe.id}>
@@ -86,10 +145,16 @@ const Recipes: React.FC = () => {
                   {recipe.description}
                 </Typography>
                 <Box sx={styles.box}>
-                  <IconButton sx={styles.buttons}>
+                  <IconButton sx={styles.buttons} 
+                  size='small' 
+                  onClick={() => toggleFavorite(recipe.id)}
+                  >
                     {recipe.isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                   </IconButton>
-                  <IconButton sx={styles.buttons}> 
+                  <IconButton sx={styles.buttons} 
+                  size='small' 
+                  onClick={() => toggleAdded(recipe.id)}
+                  > 
                     {recipe.isAdded ? <AddIcon /> : <CheckIcon />}
                   </IconButton>
                 </Box>

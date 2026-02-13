@@ -1,4 +1,4 @@
-# Weekly Recipes - Meal Planning App
+# Weekly Prep - Meal Planning App
 
 A React application built with Material-UI (MUI) for meal planning, budget tracking, and grocery shopping organization.
 

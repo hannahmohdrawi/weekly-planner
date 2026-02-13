@@ -48,7 +48,7 @@ const Header: React.FC = () => {
           component="div"
           sx={styles.brand}
         >
-          Weekly Recipes
+          Weekly Prep
         </Typography>
         <Box sx={styles.navContainer}>
           {navItems.map((item) => {

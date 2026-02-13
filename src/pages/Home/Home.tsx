@@ -15,7 +15,7 @@ const Home: React.FC = () => {
   return (
     <Container maxWidth="lg" sx={styles.container}>
       <Typography variant="h3" component="h1" sx={styles.title}>
-        Welcome to Weekly Recipes
+        Welcome to Weekly Prep
       </Typography>
       <Typography variant="body1" sx={styles.subtitle}>
         Plan your meals, track your budget, and organize your grocery shopping all in one place.
