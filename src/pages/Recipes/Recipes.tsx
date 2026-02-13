@@ -99,7 +99,7 @@ const Recipes: React.FC = () => {
               .filter(recipe => recipe.isFavorite)
               .map((recipe) => (
                 <Grid item xs={6} sm={4} md={3} key={`fav-${recipe.id}`}>
-                  <Card sx={{ ...styles.card, height: 200 }}>
+                  <Card sx={{ ...styles.card }}>
                     <CardContent sx={{ ...styles.cardContent, p: 1.5, pb: 5 }}>
                       <Typography variant="subtitle2" sx={{ ...styles.cardTitle, fontSize: 16 }}>
                         {recipe.title}
