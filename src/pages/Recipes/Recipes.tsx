@@ -107,14 +107,6 @@ const Recipes: React.FC = () => {
                       <Typography sx={{ ...styles.cardDescription, fontSize: 12 }}>
                         {recipe.description}
                       </Typography>
-                      <Box sx={{ ...styles.box, bottom: 4, left: 4 }}>
-                        <IconButton sx={styles.buttons} size="small">
-                          <FavoriteIcon fontSize="small" />
-                        </IconButton>
-                        <IconButton sx={styles.buttons} size="small">
-                          {recipe.isAdded ? <CheckIcon fontSize="small" /> : <AddIcon fontSize="small" />}
-                        </IconButton>
-                      </Box>
                     </CardContent>
                     <CardMedia
                       component="img"
