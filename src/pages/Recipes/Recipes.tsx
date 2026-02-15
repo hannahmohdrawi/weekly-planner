@@ -176,7 +176,7 @@ const Recipes: React.FC = () => {
                   size='small' 
                   onClick={() => handleAddClick(recipe)}
                   > 
-                    {recipe.isAdded ? <AddIcon /> : <CheckIcon />}
+                    {recipe.isAdded ? <CheckIcon /> : <AddIcon />}
                   </IconButton>
                 </Box>
               </CardContent>
