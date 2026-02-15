@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import {
   Container,
   Typography,
@@ -9,6 +11,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  IconButton
 } from '@mui/material';
 import * as styles from './Fridge.styles';
 
@@ -16,14 +19,34 @@ interface FridgeItem {
   ingredient: string;
   quantity: number;
   unit: string;
-}
+};
 
-const Fridge: React.FC = () => {
-  const items: FridgeItem[] = [
+const initialItems: FridgeItem[] = [
     { ingredient: 'Eggs', quantity: 12, unit: 'pcs' },
     { ingredient: 'Milk', quantity: 1, unit: 'L' },
     { ingredient: 'Chicken Breast', quantity: 2, unit: 'lbs' },
   ];
+
+const Fridge: React.FC = () => {
+  const [items, setItems] = useState<FridgeItem[]>([]);
+  
+
+  useEffect(() => {
+    // TODO backend database for ingredients currently loading from localStorage
+    const savedItems = localStorage.getItem('fridgeItems');
+    if (savedItems) {
+      setItems(JSON.parse(savedItems));
+    } else {
+      setItems(initialItems);
+      localStorage.setItem('fridgeItems', JSON.stringify(initialItems));
+    }
+  }, []);
+
+  const clearIngredient = (ingredient: string) => {
+    const updatedItems = items.filter(item => item.ingredient !== ingredient);
+    setItems(updatedItems);
+    localStorage.setItem('fridgeItems', JSON.stringify(updatedItems));
+  };
 
   return (
     <Container maxWidth="lg" sx={styles.container}>
@@ -49,6 +72,11 @@ const Fridge: React.FC = () => {
                 <TableCell>{row.ingredient}</TableCell>
                 <TableCell>{row.quantity}</TableCell>
                 <TableCell>{row.unit}</TableCell>
+                <TableCell align="center">
+                  <IconButton size="small" onClick={() => clearIngredient(row.ingredient)} color="error">
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
