@@ -5,6 +5,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
 import React, { useState } from 'react';
+import AddToMenuModal from '../../components/Modals/AddToMenuModal';
 
 interface Recipe {
   id: number;
@@ -69,6 +70,8 @@ const initialRecipes: Recipe[] = [
 
 const Recipes: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>(initialRecipes);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
   const toggleFavorite = (id: number) => {
     setRecipes(recipes.map(recipe => 
@@ -76,11 +79,37 @@ const Recipes: React.FC = () => {
     ));
   };
 
-  const toggleAdded = (id: number) => {
-    setRecipes(recipes.map(recipe => 
-      recipe.id === id ? { ...recipe, isAdded: !recipe.isAdded } : recipe
-    ));
-  }
+  const handleAddClick = (recipe: Recipe) => {
+    setSelectedRecipe(recipe);
+    setModalOpen(true);
+  };
+
+  const handleAddToMenu = (day: string, mealType: string) => {
+    if (selectedRecipe) {
+      // Saving to LocalStorage TODO add to backend
+      const weeklyMenu = JSON.parse(localStorage.getItem('weeklyMenu') || '{}');
+      
+      if (!weeklyMenu[day]) {
+        weeklyMenu[day] = {};
+      }
+      
+      weeklyMenu[day][mealType] = {
+        id: selectedRecipe.id,
+        title: selectedRecipe.title,
+        description: selectedRecipe.description,
+        image: selectedRecipe.image
+      };
+      
+      localStorage.setItem('weeklyMenu', JSON.stringify(weeklyMenu));
+      
+      // Mark recipe as added
+      setRecipes(recipes.map(recipe => 
+        recipe.id === selectedRecipe.id ? { ...recipe, isAdded: true } : recipe
+      ));
+      
+      console.log(`Added ${selectedRecipe.title} to ${day} - ${mealType}`);
+    }
+  };
 
   return (
     <Container maxWidth="lg" sx={styles.container}>
@@ -145,7 +174,7 @@ const Recipes: React.FC = () => {
                   </IconButton>
                   <IconButton sx={styles.buttons} 
                   size='small' 
-                  onClick={() => toggleAdded(recipe.id)}
+                  onClick={() => handleAddClick(recipe)}
                   > 
                     {recipe.isAdded ? <AddIcon /> : <CheckIcon />}
                   </IconButton>
@@ -161,6 +190,14 @@ const Recipes: React.FC = () => {
           </Grid>
         ))}
       </Grid>
+
+      {/* Add to Menu Modal */}
+      <AddToMenuModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onAdd={handleAddToMenu}
+        recipeName={selectedRecipe?.title || ''}
+      />
     </Container>
   );
 };
